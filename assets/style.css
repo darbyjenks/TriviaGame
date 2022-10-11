@@ -1,0 +1,10 @@
+#timer{
+    color: red;
+    float: right;
+}
+
+ul{
+    padding: 5px;
+    margin: 5px;
+    border: 5px;
+}
