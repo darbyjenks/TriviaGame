@@ -67,6 +67,7 @@ var questions = [
         clearInterval(timerInterval);
         // displayTopScores();
         console.log('scorestime')
+        startQuiz();
       }
     }, 1000);
     return timerInterval
@@ -97,12 +98,15 @@ function startQuiz(){
             // localStorage.setItem('score', JSON.stringify(score));
             let name = prompt('Please enter your name');
             // localStorage.setItem('name', JSON.stringify(name));
-            console.log(name)
+            var highScores =
+            JSON.parse(window.localStorage.getItem("highscores")) || [];
+            // console.log(name)
             let playerScore = {
               name : name,
               score : score
             }
-            localStorage.setItem("playerScore", JSON.stringify(playerScore));
+            highScores.push(playerScore);
+            localStorage.setItem("highScores", JSON.stringify(highScores));
             // console.log(playerScore)
             displayResults();
         }
@@ -115,6 +119,9 @@ startQuiz();
 function displayResults(){
   // let name = prompt('Please enter your name');
   containerEl.textContent = "hello mother fucker";
-  var allScores = JSON.parse(localStorage.getItem("playerScore"));
-  console.log(allScores)
+  var highScores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+  console.log(highScores + " scores");
+  highScores.forEach(function(highScores){
+    console.log(highScores.name)
+  })
 }
