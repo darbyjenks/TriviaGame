@@ -1,4 +1,5 @@
 let questionNumEl = document.getElementById("questionNum");
+let containerEl = document.getElementById('container');
 let timerEl = document.getElementById("timer");
 let questionEl = document.getElementById("question");
 let answersEl = document.getElementById("answers");
@@ -53,8 +54,25 @@ var questions = [
     }
   ];
 
+  let secondsLeft = 60;
   let i = 0;
   let score = 0;
+  // let name = prompt('What is your name?')
+
+  function setTime() {
+    var timerInterval = setInterval ( function() {
+      secondsLeft --;
+      timerEl.textContent = secondsLeft + " seconds remaining";
+      if(secondsLeft === 0 || i == questions.length) {
+        clearInterval(timerInterval);
+        // displayTopScores();
+        console.log('scorestime')
+      }
+    }, 1000);
+    return timerInterval
+  }
+  setTime();
+
   function getQuestions() {
     console.log(questions[0].title);
     questionEl.textContent = questions[i].title
@@ -62,12 +80,11 @@ var questions = [
     answerBEl.textContent = questions[i].b
     answerCEl.textContent = questions[i].c
     answerDEl.textContent = questions[i].d
-    // let answer = questions[i].answer;
 }
 
 function startQuiz(){
-    // event.target.matches("#answers");
     answersEl.addEventListener("click", function(event){
+      event.preventDefault();
         console.log(event.target);
         if(event.target.dataset.answer === questions[i].answer){
             score += 20;
@@ -76,10 +93,28 @@ function startQuiz(){
         if(i < questions.length){
             getQuestions();
         } else {
-            alert ('score: ' + score)
+            alert ('score: ' + score);
+            // localStorage.setItem('score', JSON.stringify(score));
+            let name = prompt('Please enter your name');
+            // localStorage.setItem('name', JSON.stringify(name));
+            console.log(name)
+            let playerScore = {
+              name : name,
+              score : score
+            }
+            localStorage.setItem("playerScore", JSON.stringify(playerScore));
+            // console.log(playerScore)
+            displayResults();
         }
     })
 }
 
 getQuestions();
 startQuiz();
+
+function displayResults(){
+  // let name = prompt('Please enter your name');
+  containerEl.textContent = "hello mother fucker";
+  var allScores = JSON.parse(localStorage.getItem("playerScore"));
+  console.log(allScores)
+}
