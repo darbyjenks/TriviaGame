@@ -99,7 +99,7 @@ function startQuiz(){
             let name = prompt('Please enter your name');
             // localStorage.setItem('name', JSON.stringify(name));
             var highScores =
-            JSON.parse(window.localStorage.getItem("highscores")) || [];
+            JSON.parse(window.localStorage.getItem("highScores")) || [];
             // console.log(name)
             let playerScore = {
               name : name,
@@ -117,11 +117,11 @@ getQuestions();
 startQuiz();
 
 function displayResults(){
-  // let name = prompt('Please enter your name');
-  containerEl.textContent = "hello mother fucker";
-  var highScores = JSON.parse(window.localStorage.getItem("highscores")) || [];
+  var highScores = JSON.parse(window.localStorage.getItem("highScores")) || [];
   console.log(highScores + " scores");
   highScores.forEach(function(highScores){
-    console.log(highScores.name)
+    var pEl = document.createElement('p');
+    pEl.textContent = highScores.name + " " + highScores.score;
+    document.body.appendChild(pEl);
   })
 }
